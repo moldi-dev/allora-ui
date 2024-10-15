@@ -1,7 +1,7 @@
 import {PasswordResetRequest, PasswordResetTokenRequest} from "@/types/requests.ts";
 import {awaitDeveloperTimeout, axiosInstance, GENERIC_ERROR_MESSAGE} from "@/constants.ts";
-import {ErrorResponse, HttpResponse} from "@/types/responses.ts";
-import {useMutation} from "@tanstack/react-query";
+import {ErrorResponse, HttpResponse, UserResponse} from "@/types/responses.ts";
+import {useMutation, useQuery} from "@tanstack/react-query";
 import {toast} from "sonner";
 
 async function passwordResetTokenFn(request: PasswordResetTokenRequest) {
@@ -55,5 +55,25 @@ export const usePasswordResetMutation = () => {
             console.error(error);
             toast.error(GENERIC_ERROR_MESSAGE);
         }
+    });
+};
+
+async function getAuthenticatedUserDataFn() {
+    await awaitDeveloperTimeout();
+
+    try {
+        const response = await axiosInstance.get<HttpResponse<UserResponse>>("/users/authenticated");
+        return response.data as HttpResponse<UserResponse>;
+    }
+
+    catch (error) {
+        return error.response.data as ErrorResponse;
+    }
+}
+
+export const useGetAuthenticatedUserDataQuery = () => {
+    return useQuery<HttpResponse<UserResponse> | ErrorResponse, Error>({
+        queryFn: getAuthenticatedUserDataFn,
+        queryKey: ["getAuthenticatedUserData"]
     });
 };

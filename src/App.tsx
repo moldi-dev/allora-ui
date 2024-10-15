@@ -36,7 +36,7 @@ function AppRoutes() {
       <Routes>
           <Route path="sign-in" element={<SignInPage/>} />
           <Route path="sign-up" element={<SignUpPage/>} />
-          <Route path="" element={<HomePage/>}/>
+          <Route path="/home" element={<HomePage/>}/>
           <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
           <Route path="*" element={<NotFoundPage/>} />
       </Routes>

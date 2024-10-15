@@ -2,15 +2,9 @@ import React from 'react';
 import {Card, CardContent, CardFooter, CardHeader} from "@/components/ui/card.tsx";
 import {X} from "lucide-react";
 import {Button} from "@/components/ui/button.tsx";
-import {useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 function NotFoundComponent() {
-    const navigate = useNavigate();
-
-    function handleGoToHomePage() {
-        navigate("");
-    }
-
     return (
         <div
             className="flex min-h-[100dvh] items-center justify-center bg-white px-4 py-12">
@@ -27,11 +21,13 @@ function NotFoundComponent() {
                         from the homepage.
                     </div>
                 </CardContent>
-                <CardFooter>
-                    <Button onClick={handleGoToHomePage}
+                <CardFooter className="flex">
+                    <Link to="/home" className="w-full">
+                        <Button
                             className="w-full rounded-lg text-primary px-4 py-3 font-medium text-white hover:bg-[#ffa500] focus:outline-none">
-                        Go to Homepage
-                    </Button>
+                            Go to Homepage
+                        </Button>
+                    </Link>
                 </CardFooter>
             </Card>
         </div>

@@ -1,6 +1,6 @@
 import {TriangleAlertIcon} from "lucide-react";
 import {Card, CardContent, CardHeader} from "@/components/ui/card.tsx";
-import {GENERIC_ERROR_MESSAGE} from "@/constants.tsx";
+import {GENERIC_ERROR_MESSAGE} from "@/constants.ts";
 
 type ErrorComponentProps = {
     title?: string;

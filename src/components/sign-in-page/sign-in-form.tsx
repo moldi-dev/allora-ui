@@ -13,9 +13,9 @@ import {isErrorResponse, isHttpResponse} from "@/lib/utils.ts";
 import {toast} from "react-hot-toast";
 
 export default function SignInForm() {
-    const signInMutation = useSignInMutation();
-
     const navigate = useNavigate();
+
+    const signInMutation = useSignInMutation();
 
     const recaptchaRef = createRef<ReCAPTCHA>();
 
@@ -38,7 +38,7 @@ export default function SignInForm() {
         const response = await signInMutation.mutateAsync(signInRequest);
 
         if (isHttpResponse(response)) {
-            navigate("");
+            navigate("/home");
         }
 
         else if (isErrorResponse(response) && response.validationErrors) {
