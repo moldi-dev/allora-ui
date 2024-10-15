@@ -7,6 +7,7 @@ import SignUpPage from "@/pages/sign-up-page.tsx";
 import NotFoundPage from "@/pages/not-found-page.tsx";
 import HomePage from "@/pages/home-page.tsx";
 import {Toaster} from "react-hot-toast";
+import ForgotPasswordPage from "@/pages/forgot-password-page.tsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -36,6 +37,7 @@ function AppRoutes() {
           <Route path="sign-in" element={<SignInPage/>} />
           <Route path="sign-up" element={<SignUpPage/>} />
           <Route path="" element={<HomePage/>}/>
+          <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
           <Route path="*" element={<NotFoundPage/>} />
       </Routes>
     );

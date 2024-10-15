@@ -3,7 +3,7 @@ import {ClipLoader} from "react-spinners";
 import React from "react";
 
 type LoadingButtonProps = {
-    color: string;
+    clipLoaderColor: string;
     isLoading: boolean;
     className?: string;
     type: "submit" | "reset" | "button";
@@ -19,7 +19,7 @@ const LoadingButton = (props: LoadingButtonProps) => {
                 className={props.className} type={props.type}>
             {props.isLoading ? (
                 <ClipLoader
-                    color={props.color}
+                    color={props.clipLoaderColor}
                     loading={props.isLoading}
                     size={20}
                     aria-label="Loading Spinner"

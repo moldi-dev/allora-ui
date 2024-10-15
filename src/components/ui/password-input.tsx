@@ -24,7 +24,6 @@ const PasswordInput = (props: PasswordInputProps) => {
             <Input
                 id={props.id}
                 onChange={props.onChange}
-                minLength={8}
                 type={showPassword ? 'text' : 'password'}
                 placeholder={props.placeholder}
                 className={props.className}
