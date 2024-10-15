@@ -31,8 +31,12 @@ axiosInstance.interceptors.response.use(
     },
     (error) => {
         if (error.response) {
-            //console.clear();
+            //console.clear(); // TODO: uncomment the console clear once the API is completely developed
         }
         return Promise.reject(error);
     }
 );
+
+export async function awaitDeveloperTimeout() {
+    return await new Promise(resolve => setTimeout(resolve, 1000));
+}

@@ -132,7 +132,7 @@ export type ErrorResponse = {
     errorStatus?: string;
     errorMessage?: string;
     requestPath?: string;
-    validationErrors: ValidationErrors;
+    validationErrors?: ValidationErrors;
 }
 
 

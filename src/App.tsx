@@ -1,11 +1,12 @@
 import {useEffect} from "react";
 import {BrowserRouter, Route, Routes, useLocation} from "react-router-dom";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import SignInPage from "@/pages/SignInPage.tsx";
+import SignInPage from "@/pages/sign-in-page.tsx";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
-import SignUpPage from "@/pages/SignUpPage.tsx";
-import NotFoundPage from "@/pages/NotFoundPage.tsx";
-import HomePage from "@/pages/HomePage.tsx";
+import SignUpPage from "@/pages/sign-up-page.tsx";
+import NotFoundPage from "@/pages/not-found-page.tsx";
+import HomePage from "@/pages/home-page.tsx";
+import {Toaster} from "react-hot-toast";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -46,6 +47,14 @@ function App() {
           <ScrollToTop />
           <QueryClientProvider client={queryClient}>
               <AppRoutes/>
+              <Toaster
+                  position="top-right"
+                  reverseOrder={false}
+                  gutter={8}
+                  toastOptions={{
+                      duration: 3000,
+                  }}
+              />
               <ReactQueryDevtools initialIsOpen={false}/>
           </QueryClientProvider>
       </BrowserRouter>
