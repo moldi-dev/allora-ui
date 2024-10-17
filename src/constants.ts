@@ -40,3 +40,9 @@ axiosInstance.interceptors.response.use(
 export async function awaitDeveloperTimeout() {
     return await new Promise(resolve => setTimeout(resolve, 500));
 }
+
+export const dropZoneConfiguration = {
+    maxFiles: 5,
+    maxSize: 1024 * 1024 * 5,
+    multiple: true,
+};

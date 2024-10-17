@@ -59,8 +59,6 @@ export const usePasswordResetMutation = () => {
 };
 
 async function getAuthenticatedUserDataFn() {
-    await awaitDeveloperTimeout();
-
     try {
         const response = await axiosInstance.get<HttpResponse<UserResponse>>("/users/authenticated");
         return response.data as HttpResponse<UserResponse>;

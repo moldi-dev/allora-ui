@@ -58,3 +58,32 @@ export const useSignUpMutation = () => {
     });
 };
 
+async function signOutFn() {
+    await awaitDeveloperTimeout();
+
+    try {
+        const response = await axiosInstance.post<HttpResponse<null>>("/authentication/sign-out");
+        return response.data as HttpResponse<null>;
+    }
+
+    catch (error) {
+        return error.response.data as ErrorResponse;
+    }
+}
+
+export const useSignOutMutation = () => {
+    return useMutation<HttpResponse<null> | ErrorResponse, Error>({
+        mutationFn: signOutFn,
+        mutationKey: ["signOut"],
+        onSuccess(response) {
+            return response;
+        },
+        onError(error) {
+            console.error(error);
+            toast.error(GENERIC_ERROR_MESSAGE);
+        }
+    });
+};
+
+
+

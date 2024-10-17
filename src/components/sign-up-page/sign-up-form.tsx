@@ -68,9 +68,9 @@ function SignUpForm() {
                 <div className="hidden lg:flex lg:w-1/2 bg-gray-100 items-center justify-center relative">
 
                     <img
-                        alt="Fashionable clothing display"
+                        alt="Fashionable clothing"
                         className="object-cover w-full h-full"
-                        src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        src="public/clothing-store-image.avif"
                     />
 
                     <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
@@ -277,9 +277,9 @@ function SignUpForm() {
                 <div className="hidden lg:flex lg:w-1/2 bg-gray-100 items-center justify-center relative">
 
                     <img
-                        alt="Fashionable clothing display"
+                        alt="Fashionable clothing"
                         className="object-cover w-full h-full"
-                        src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        src="public/clothing-store-image.avif"
                     />
 
                     <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">

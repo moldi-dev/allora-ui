@@ -8,15 +8,16 @@ import NotFoundPage from "@/pages/not-found-page.tsx";
 import HomePage from "@/pages/home-page.tsx";
 import {Toaster} from "react-hot-toast";
 import ForgotPasswordPage from "@/pages/forgot-password-page.tsx";
+import AdminDashboardPage from "@/pages/admin-dashboard-page.tsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
-            refetchOnReconnect: false,
-            refetchOnWindowFocus: false,
-            refetchOnMount: false,
+            refetchOnReconnect: true,
+            refetchOnWindowFocus: true,
+            refetchOnMount: true,
             retry: 3,
-            staleTime: 1000 * 60 * 60 * 5,
+            staleTime: 1000 * 5,
         },
     },
 });
@@ -38,6 +39,7 @@ function AppRoutes() {
           <Route path="sign-up" element={<SignUpPage/>} />
           <Route path="/home" element={<HomePage/>}/>
           <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
+          <Route path="/admin-dashboard" element={<AdminDashboardPage/>}/>
           <Route path="*" element={<NotFoundPage/>} />
       </Routes>
     );
