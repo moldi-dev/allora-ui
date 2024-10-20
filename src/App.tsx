@@ -9,6 +9,8 @@ import HomePage from "@/pages/home-page.tsx";
 import {Toaster} from "react-hot-toast";
 import ForgotPasswordPage from "@/pages/forgot-password-page.tsx";
 import AdminDashboardPage from "@/pages/admin-dashboard-page.tsx";
+import ProfilePage from "@/pages/profile-page.tsx";
+import SecurityPage from "@/pages/security-page.tsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -40,6 +42,8 @@ function AppRoutes() {
           <Route path="/home" element={<HomePage/>}/>
           <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
           <Route path="/admin-dashboard" element={<AdminDashboardPage/>}/>
+          <Route path="/profile" element={<ProfilePage/>}/>
+          <Route path="/security" element={<SecurityPage/>}/>
           <Route path="*" element={<NotFoundPage/>} />
       </Routes>
     );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { UserResponse } from "@/types/responses.ts";
-import {ShoppingCart, Shirt, User, AppWindowMac, ClipboardList} from "lucide-react";
+import {ShoppingCart, Shirt, User, AppWindowMac, ClipboardList, LockIcon} from "lucide-react";
 import {Link} from "react-router-dom";
 import {
     DropdownMenu,
@@ -13,6 +13,7 @@ import {toast} from "react-hot-toast";
 import {GENERIC_ERROR_MESSAGE} from "@/constants.ts";
 import LoadingButton from "@/components/ui/loading-button.tsx";
 import {Button} from "@/components/ui/button.tsx";
+import {Avatar, AvatarFallback} from "@/components/ui/avatar.tsx";
 
 type UserNavigationProps = {
     user?: UserResponse;
@@ -89,17 +90,31 @@ function UserNavigation(props: UserNavigationProps) {
                             <div className="relative">
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
-                                        <User className="h-6 w-6 hover:cursor-pointer" onClick={toggleUserDetails} />
+                                        <Avatar>
+                                            <AvatarFallback className="h-10 w-10 hover:cursor-pointer" onClick={toggleUserDetails}>
+                                                {props.user.userPersonalInformation.firstName.at(0).concat(props.user.userPersonalInformation.lastName.at(0)).toUpperCase()}
+                                            </AvatarFallback>
+                                        </Avatar>
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent className="w-56">
-                                        <DropdownMenuItem>
-                                            <User className="mr-2 h-4 w-4"/>
-                                            <span>Profile</span>
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem>
-                                            <ClipboardList className="mr-2 h-4 w-4"/>
-                                            <span>Orders</span>
-                                        </DropdownMenuItem>
+                                        <Link to="/profile">
+                                            <DropdownMenuItem>
+                                                <User className="mr-2 h-4 w-4"/>
+                                                <span>Profile</span>
+                                            </DropdownMenuItem>
+                                        </Link>
+                                        <Link to="/orders">
+                                            <DropdownMenuItem>
+                                                <ClipboardList className="mr-2 h-4 w-4"/>
+                                                <span>Orders</span>
+                                            </DropdownMenuItem>
+                                        </Link>
+                                        <Link to="/security">
+                                            <DropdownMenuItem>
+                                                <LockIcon className="mr-2 h-4 w-4"/>
+                                                <span>Security</span>
+                                            </DropdownMenuItem>
+                                        </Link>
                                         {props.user.isAdministrator &&
                                             <Link to="/admin-dashboard">
                                                 <DropdownMenuItem>

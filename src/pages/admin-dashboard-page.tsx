@@ -5,16 +5,14 @@ import ErrorPage from "@/pages/error-page.tsx";
 import {isHttpResponse} from "@/lib/utils.ts";
 import {Navigate, useSearchParams} from "react-router-dom";
 import AdminNavigation from "@/components/admin-dashboard-page/admin-navigation.tsx";
-import {ClipboardList, FolderTree, Ruler, ShoppingBag, Star, Tag, Users} from "lucide-react";
+import {ClipboardList, ShoppingBag, Star, Users} from "lucide-react";
 import ProductsComponent from "@/components/admin-dashboard-page/products-component.tsx";
 import EmptyComponent from "@/components/empty-component.tsx";
+import UsersComponent from "@/components/admin-dashboard-page/users-component.tsx";
 
 const components = [
     { name: "Users", icon: Users, param: "users" },
     { name: "Products", icon: ShoppingBag, param: "products" },
-    { name: "Product Sizes", icon: Ruler, param: "sizes" },
-    { name: "Product Brands", icon: Tag, param: "brands" },
-    { name: "Product Categories", icon: FolderTree, param: "categories" },
     { name: "Reviews", icon: Star, param: "reviews" },
     { name: "Orders", icon: ClipboardList, param: "orders" },
 ]
@@ -57,6 +55,7 @@ function AdminDashboardPage() {
 
                 <div className="flex-grow flex items-center justify-center bg-gray-50">
                     {activeComponent === "products" && <ProductsComponent/>}
+                    {activeComponent === "users" && <UsersComponent/>}
                     {activeComponent === null && (
                         <EmptyComponent
                             title="Allora Admin Dashboard"

@@ -28,6 +28,7 @@ import {InputTags} from "@/components/ui/input-tags.tsx";
 type AddProductDialogProps = {
     open: boolean;
     onOpenChange: () => void;
+    onSuccess: () => void;
 }
 
 function AddProductDialog(props: AddProductDialogProps) {
@@ -78,7 +79,7 @@ function AddProductDialog(props: AddProductDialogProps) {
         const response = await postProductMutation.mutateAsync(formData);
 
         if (isHttpResponse(response)) {
-            window.location.reload();
+            props.onSuccess();
         }
 
         else if (isErrorResponse(response) && response.validationErrors) {

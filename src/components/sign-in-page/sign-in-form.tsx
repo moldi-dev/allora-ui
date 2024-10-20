@@ -66,7 +66,7 @@ export default function SignInForm() {
                 <img
                     alt="Fashionable clothing"
                     className="object-cover w-full h-full"
-                    src="public/clothing-store-image.avif"
+                    src="src/assets/clothing-store-image.avif"
                 />
 
                 <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">

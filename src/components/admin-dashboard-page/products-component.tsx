@@ -19,11 +19,11 @@ import {
     PaginationPrevious
 } from "@/components/ui/pagination.tsx";
 import UpdateProductDialog from "@/components/admin-dashboard-page/update-product-dialog.tsx";
+import {toast} from "react-hot-toast";
 
 function ProductsComponent() {
     const [page, setPage] = useState<number>(0);
     const [totalPages, setTotalPages] = useState<number>(0);
-
     const selectedProductRef = useRef<ProductResponse | null>(null);
 
     const [isAddProductDialogOpen, setIsAddProductDialogOpen] = useState<boolean>(false);
@@ -42,7 +42,7 @@ function ProductsComponent() {
 
             setProductsData(products);
         }
-    }, [getAllProducts.isSuccess]);
+    }, [getAllProducts.data, getAllProducts.isSuccess]);
 
     async function handleDeleteProduct(product: ProductResponse) {
         selectedProductRef.current = product;
@@ -52,6 +52,24 @@ function ProductsComponent() {
     async function handleUpdateProduct(product: ProductResponse) {
         selectedProductRef.current = product;
         setIsUpdateProductDialogOpen(true);
+    }
+
+    async function onAddProductSuccess() {
+        await getAllProducts.refetch();
+        toast.success("The product has been added successfully!");
+        setIsAddProductDialogOpen(false);
+    }
+
+    async function onUpdateProductSuccess() {
+        await getAllProducts.refetch();
+        toast.success("The product has been updated successfully!");
+        setIsUpdateProductDialogOpen(false);
+    }
+
+    async function onDeleteProductSuccess() {
+        await getAllProducts.refetch();
+        toast.success("The product has been deleted successfully!");
+        setIsDeleteProductDialogOpen(false);
     }
 
     if (getAllProducts.isPending) {
@@ -70,7 +88,7 @@ function ProductsComponent() {
         if (productsData.length === 0) {
             return (
                 <>
-                    <AddProductDialog open={isAddProductDialogOpen} onOpenChange={() => setIsAddProductDialogOpen(false)} />
+                    <AddProductDialog onSuccess={onAddProductSuccess} open={isAddProductDialogOpen} onOpenChange={() => setIsAddProductDialogOpen(false)} />
 
                     <EmptyComponent title="Products"
                                     content="No products could be found. Consider adding the first product"
@@ -85,15 +103,15 @@ function ProductsComponent() {
             return (
                 <>
                     {isAddProductDialogOpen &&
-                        <AddProductDialog open={isAddProductDialogOpen} onOpenChange={() => setIsAddProductDialogOpen(false)} />
+                        <AddProductDialog onSuccess={onAddProductSuccess} open={isAddProductDialogOpen} onOpenChange={() => setIsAddProductDialogOpen(false)} />
                     }
 
                     {isDeleteProductDialogOpen &&
-                        <DeleteProductDialog product={selectedProductRef.current} open={isDeleteProductDialogOpen} onOpenChange={() => setIsDeleteProductDialogOpen(false)} />
+                        <DeleteProductDialog onSuccess={onDeleteProductSuccess} product={selectedProductRef.current} open={isDeleteProductDialogOpen} onOpenChange={() => setIsDeleteProductDialogOpen(false)} />
                     }
 
                     {isUpdateProductDialogOpen &&
-                        <UpdateProductDialog product={selectedProductRef.current} open={isUpdateProductDialogOpen} onOpenChange={() => setIsUpdateProductDialogOpen(false)} />
+                        <UpdateProductDialog onSuccess={onUpdateProductSuccess} product={selectedProductRef.current} open={isUpdateProductDialogOpen} onOpenChange={() => setIsUpdateProductDialogOpen(false)} />
                     }
 
                     <div className="container mx-auto p-4">

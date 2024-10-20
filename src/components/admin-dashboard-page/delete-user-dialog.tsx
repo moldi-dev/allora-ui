@@ -1,25 +1,25 @@
 import React from 'react';
-import {ProductResponse} from "@/types/responses.ts";
+import {UserResponse} from "@/types/responses.ts";
 import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from "@/components/ui/dialog.tsx";
 import {ScrollArea} from "@/components/ui/scroll-area.tsx";
 import LoadingButton from "@/components/ui/loading-button.tsx";
-import {useDeleteProductMutation} from "@/apis/ProductsAPI.ts";
 import {isErrorResponse, isHttpResponse} from "@/lib/utils.ts";
 import {toast} from "react-hot-toast";
 import {GENERIC_ERROR_MESSAGE} from "@/constants.ts";
+import {useDeleteUserMutation} from "@/apis/UserAPI.ts";
 
-type DeleteProductDialogProps = {
-    product: ProductResponse;
+type DeleteUserDialogProps = {
+    user: UserResponse;
     open: boolean;
     onOpenChange: () => void;
     onSuccess: () => void;
 }
 
-function DeleteProductDialog(props: DeleteProductDialogProps) {
-    const deleteProductMutation = useDeleteProductMutation(props.product.productId);
+function DeleteUserDialog(props: DeleteUserDialogProps) {
+    const deleteUserMutation = useDeleteUserMutation(props.user.userId);
 
-    async function handleDeleteProduct() {
-        const response = await deleteProductMutation.mutateAsync();
+    async function handleDeleteUser() {
+        const response = await deleteUserMutation.mutateAsync();
 
         if (isHttpResponse(response)) {
             props.onSuccess();
@@ -34,20 +34,20 @@ function DeleteProductDialog(props: DeleteProductDialogProps) {
         <Dialog open={props.open} onOpenChange={props.onOpenChange}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Delete a product</DialogTitle>
+                    <DialogTitle>Delete a user</DialogTitle>
                     <DialogDescription>
-                        Are you sure that you want to delete the product named <span className="text-red-500">{props.product.name}</span>?
-                        This will remove all the associated orders with this product. This operation can not be undone!
+                        Are you sure that you want to delete the user <span className="text-red-500">{props.user.username}</span>?
+                        This will remove all the associated orders with this user. This operation can not be undone!
                     </DialogDescription>
                 </DialogHeader>
                 <ScrollArea className="rounded-md flex-grow pr-5">
                     <LoadingButton
-                        onClick={handleDeleteProduct}
+                        onClick={handleDeleteUser}
                         className="w-full block mt-5"
                         type="button"
                         clipLoaderColor="white"
-                        isLoading={deleteProductMutation.isPending}>
-                        Delete the product
+                        isLoading={deleteUserMutation.isPending}>
+                        Delete the user
                     </LoadingButton>
                 </ScrollArea>
             </DialogContent>
@@ -55,4 +55,4 @@ function DeleteProductDialog(props: DeleteProductDialogProps) {
     );
 }
 
-export default DeleteProductDialog;
+export default DeleteUserDialog;

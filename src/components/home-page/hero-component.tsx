@@ -33,7 +33,7 @@ function HeroComponent() {
             <div className="lg:absolute lg:flex hidden lg:inset-y-0 lg:right-0 lg:w-1/2">
                 <img
                     className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
-                    src="public/clothing-store-image.avif"
+                    src="src/assets/clothing-store-image.avif"
                     alt="Allora store showcase"
                 />
             </div>

@@ -88,6 +88,7 @@ export type UserResponse = {
     username: string;
     email: string;
     isAdministrator: boolean;
+    userPersonalInformation: UserPersonalInformationResponse;
 }
 
 type Pageable = {

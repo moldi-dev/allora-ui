@@ -23,6 +23,7 @@ type UpdateProductDialogProps = {
     product: ProductResponse;
     open: boolean;
     onOpenChange: () => void;
+    onSuccess: () => void;
 }
 
 function UpdateProductDialog(props: UpdateProductDialogProps) {
@@ -76,7 +77,7 @@ function UpdateProductDialog(props: UpdateProductDialogProps) {
         });
 
         if (isHttpResponse(response)) {
-            window.location.reload();
+            props.onSuccess();
         }
 
         else if (isErrorResponse(response) && response.validationErrors) {
@@ -115,7 +116,7 @@ function UpdateProductDialog(props: UpdateProductDialogProps) {
             <DialogContent className="h-full w-full">
                 <DialogHeader>
                     <DialogTitle>Update a product</DialogTitle>
-                    <DialogDescription>Update the information required below in order to update the product.</DialogDescription>
+                    <DialogDescription>Change the information required below in order to update the product.</DialogDescription>
                 </DialogHeader>
                 <ScrollArea className="rounded-md flex-grow pr-5">
                     <form onSubmit={handleSubmit(onSubmit)} className="mr-5 ml-5">
