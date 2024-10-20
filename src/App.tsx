@@ -11,6 +11,7 @@ import ForgotPasswordPage from "@/pages/forgot-password-page.tsx";
 import AdminDashboardPage from "@/pages/admin-dashboard-page.tsx";
 import ProfilePage from "@/pages/profile-page.tsx";
 import SecurityPage from "@/pages/security-page.tsx";
+import ProductsPage from "@/pages/products-page.tsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -44,6 +45,7 @@ function AppRoutes() {
           <Route path="/admin-dashboard" element={<AdminDashboardPage/>}/>
           <Route path="/profile" element={<ProfilePage/>}/>
           <Route path="/security" element={<SecurityPage/>}/>
+          <Route path="/products" element={<ProductsPage/>}/>
           <Route path="*" element={<NotFoundPage/>} />
       </Routes>
     );

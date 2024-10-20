@@ -2,6 +2,7 @@ import {awaitDeveloperTimeout, axiosInstance, GENERIC_ERROR_MESSAGE} from "@/con
 import {ErrorResponse, HttpResponse, PageResponse, ProductResponse} from "@/types/responses.ts";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {toast} from "sonner";
+import {ProductFilterRequest} from "@/types/requests.ts";
 
 async function getProductsInStockFn(page: number, size: number) {
     await awaitDeveloperTimeout();
@@ -114,6 +115,33 @@ export const useDeleteProductMutation = (id: number) => {
     return useMutation<HttpResponse<null> | ErrorResponse, Error>({
         mutationFn: () => deleteProductFn(id),
         mutationKey: ["deleteProduct", id],
+        onSuccess(response) {
+            return response;
+        },
+        onError(error) {
+            console.error(error);
+            toast.error(GENERIC_ERROR_MESSAGE);
+        }
+    });
+};
+
+async function getFilteredProductsFn(request: ProductFilterRequest) {
+    await awaitDeveloperTimeout();
+
+    try {
+        const response = await axiosInstance.post<HttpResponse<PageResponse<ProductResponse>>>(`/products/all/filters?page=${request.page}&size=1`, request);
+        return response.data as HttpResponse<PageResponse<ProductResponse>>;
+    }
+
+    catch (error) {
+        return error.response.data as ErrorResponse;
+    }
+}
+
+export const useGetFilteredProductsMutation = () => {
+    return useMutation<HttpResponse<PageResponse<ProductResponse>> | ErrorResponse, Error, ProductFilterRequest>({
+        mutationFn: getFilteredProductsFn,
+        mutationKey: ["getFilteredProducts"],
         onSuccess(response) {
             return response;
         },
