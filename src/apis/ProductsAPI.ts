@@ -125,11 +125,11 @@ export const useDeleteProductMutation = (id: number) => {
     });
 };
 
-async function getFilteredProductsFn(request: ProductFilterRequest) {
+async function getFilteredProductsFn(page: number, request: ProductFilterRequest) {
     await awaitDeveloperTimeout();
 
     try {
-        const response = await axiosInstance.post<HttpResponse<PageResponse<ProductResponse>>>(`/products/all/filters?page=${request.page}&size=1`, request);
+        const response = await axiosInstance.post<HttpResponse<PageResponse<ProductResponse>>>(`/products/all/filters?page=${page}&size=9`, request);
         return response.data as HttpResponse<PageResponse<ProductResponse>>;
     }
 
@@ -139,15 +139,8 @@ async function getFilteredProductsFn(request: ProductFilterRequest) {
 }
 
 export const useGetFilteredProductsMutation = () => {
-    return useMutation<HttpResponse<PageResponse<ProductResponse>> | ErrorResponse, Error, ProductFilterRequest>({
-        mutationFn: getFilteredProductsFn,
+    return useMutation<HttpResponse<PageResponse<ProductResponse>> | ErrorResponse, Error, { page: number; request: ProductFilterRequest }>({
+        mutationFn: ({ page, request }) => getFilteredProductsFn(page, request),
         mutationKey: ["getFilteredProducts"],
-        onSuccess(response) {
-            return response;
-        },
-        onError(error) {
-            console.error(error);
-            toast.error(GENERIC_ERROR_MESSAGE);
-        }
     });
 };

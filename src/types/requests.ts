@@ -79,14 +79,13 @@ export type SignUpRequest = {
 }
 
 export type ProductFilterRequest = {
-    name: string;
-    brandsIds: number[];
-    categoriesIds: number[];
-    sizesIds: number[];
-    gendersIds: number[];
+    name?: string;
+    brandsIds?: number[];
+    categoriesIds?: number[];
+    sizesIds?: number[];
+    gendersIds?: number[];
     minPrice?: number;
     maxPrice?: number;
     sort: string;
-    page: number;
 };
 
