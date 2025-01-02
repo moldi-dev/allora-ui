@@ -70,7 +70,7 @@ function ProductCard (props: ProductCardProps) {
             </CardContent>
             <CardFooter className="flex justify-between items-center">
                 <span className="text-lg font-bold">${props.product.price.toFixed(2)}</span>
-                <Link to={`/product/id=${props.product.productId}`}>
+                <Link to={`/product/${props.product.productId}`}>
                     <Button>View product</Button>
                 </Link>
             </CardFooter>

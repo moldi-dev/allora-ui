@@ -9,6 +9,7 @@ import {ClipboardList, ShoppingBag, Star, Users} from "lucide-react";
 import ProductsComponent from "@/components/admin-dashboard-page/products-component.tsx";
 import EmptyComponent from "@/components/empty-component.tsx";
 import UsersComponent from "@/components/admin-dashboard-page/users-component.tsx";
+import ReviewsComponent from "@/components/admin-dashboard-page/reviews-component.tsx";
 
 const components = [
     { name: "Users", icon: Users, param: "users" },
@@ -56,6 +57,7 @@ function AdminDashboardPage() {
                 <div className="flex-grow flex items-center justify-center bg-gray-50">
                     {activeComponent === "products" && <ProductsComponent/>}
                     {activeComponent === "users" && <UsersComponent/>}
+                    {activeComponent === "reviews" && <ReviewsComponent/>}
                     {activeComponent === null && (
                         <EmptyComponent
                             title="Allora Admin Dashboard"

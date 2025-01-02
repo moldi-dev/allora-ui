@@ -69,7 +69,7 @@ export type ProductResponse = {
 export type ReviewResponse = {
     reviewId: number;
     productId: number;
-    comment: string;
+    comment?: string;
     rating: number;
     firstName: string;
     lastName: string;

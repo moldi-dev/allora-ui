@@ -28,7 +28,7 @@ async function getAllProductsFn(page: number) {
     await awaitDeveloperTimeout();
 
     try {
-        const response = await axiosInstance.get<HttpResponse<PageResponse<ProductResponse>>>(`/products?page=${page}&size=9`);
+        const response = await axiosInstance.get<HttpResponse<PageResponse<ProductResponse>>>(`/products?page=${page}&size=3`);
         return response.data as HttpResponse<PageResponse<ProductResponse>>;
     }
 
@@ -144,3 +144,23 @@ export const useGetFilteredProductsMutation = () => {
         mutationKey: ["getFilteredProducts"],
     });
 };
+
+async function getProductByIdFn(id: number) {
+    await awaitDeveloperTimeout();
+
+    try {
+        const response = await axiosInstance.get<HttpResponse<ProductResponse>>(`/products/id=${id}`);
+        return response.data as HttpResponse<ProductResponse>;
+    }
+
+    catch (error) {
+        return error.response.data as ErrorResponse;
+    }
+}
+
+export const useGetProductByIdQuery = (id: number) => {
+    return useQuery<HttpResponse<ProductResponse> | ErrorResponse, Error>({
+        queryFn: () => getProductByIdFn(id),
+        queryKey: ["getProductById", id]
+    });
+}

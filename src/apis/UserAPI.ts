@@ -8,7 +8,7 @@ async function getAllUsersFn(page: number) {
     await awaitDeveloperTimeout();
 
     try {
-        const response = await axiosInstance.get<HttpResponse<PageResponse<UserResponse>>>(`/users?page=${page}&size=9`);
+        const response = await axiosInstance.get<HttpResponse<PageResponse<UserResponse>>>(`/users?page=${page}&size=3`);
         return response.data as HttpResponse<PageResponse<UserResponse>>;
     }
 
