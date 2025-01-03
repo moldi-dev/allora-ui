@@ -10,6 +10,7 @@ import ProductsComponent from "@/components/admin-dashboard-page/products-compon
 import EmptyComponent from "@/components/empty-component.tsx";
 import UsersComponent from "@/components/admin-dashboard-page/users-component.tsx";
 import ReviewsComponent from "@/components/admin-dashboard-page/reviews-component.tsx";
+import OrdersComponent from "@/components/admin-dashboard-page/orders-component.tsx";
 
 const components = [
     { name: "Users", icon: Users, param: "users" },
@@ -58,6 +59,7 @@ function AdminDashboardPage() {
                     {activeComponent === "products" && <ProductsComponent/>}
                     {activeComponent === "users" && <UsersComponent/>}
                     {activeComponent === "reviews" && <ReviewsComponent/>}
+                    {activeComponent === "orders" && <OrdersComponent/>}
                     {activeComponent === null && (
                         <EmptyComponent
                             title="Allora Admin Dashboard"

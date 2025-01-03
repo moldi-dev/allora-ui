@@ -7,7 +7,6 @@ import ErrorComponent from "@/components/ui/error-component.tsx";
 import EmptyComponent from "@/components/empty-component.tsx";
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {Badge} from "@/components/ui/badge.tsx";
-import {Button} from "@/components/ui/button.tsx";
 import {OrderStatus} from "@/types/requests.ts";
 import {
     Pagination,
