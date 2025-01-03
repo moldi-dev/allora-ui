@@ -19,6 +19,8 @@ import {
     PaginationLink, PaginationNext,
     PaginationPrevious
 } from "@/components/ui/pagination.tsx";
+import Cart, {CartItem} from "@/lib/cart.ts";
+import {toast} from "react-hot-toast";
 
 type ProductInformationProps = {
     productId: string;
@@ -44,9 +46,26 @@ function ProductInformation(props: ProductInformationProps) {
         }
     }, [reviewDataQuery.data, reviewDataQuery.isSuccess]);
 
-    const handleAddToCart = () => {
-        console.log("SELECTED QUANTITY: " + selectedQuantity);
-        console.log("SELECTED SIZE: " + selectedSize);
+    const handleAddToCart = (product: ProductResponse) => {
+        const sizeId: number = parseInt(selectedSize, 10);
+
+        // TODO: fix the size name logic
+        const item: CartItem = {
+            name: product.name,
+            price: product.price,
+            productId: product.productId,
+            quantity: selectedQuantity,
+            productSizeId: sizeId,
+            productSizeName: product.sizes.find(size => size.productSizeId === sizeId)?.name || "Unknown",
+            image: product.images.at(0).url,
+            productGenderName: product.gender.name,
+            productCategoryName: product.category.name,
+            productBrandName: product.brand.name
+        };
+
+        Cart.addItem(item);
+
+        toast.success("Your item has been added to your cart!");
     }
 
     if (productDataQuery.isPending || reviewDataQuery.isPending) {
@@ -93,11 +112,11 @@ function ProductInformation(props: ProductInformationProps) {
                                         {product.sizes.map((size) => (
                                             <div key={size.productSizeId}>
                                                 <RadioGroupItem
-                                                    value={size.name}
-                                                    id={size.name}
+                                                    value={size.productSizeId.toString()}
+                                                    id={size.productSizeId.toString()}
                                                     className="peer"/>
                                                 <div className="flex flex-col items-center">
-                                                    <Label htmlFor={size.name}
+                                                    <Label htmlFor={size.productSizeId.toString()}
                                                            className="mt-1">{size.name}</Label>
                                                 </div>
                                             </div>
@@ -126,7 +145,7 @@ function ProductInformation(props: ProductInformationProps) {
                                         </Button>
                                     </div>
                                 </div>
-                                <Button className="w-full" onClick={handleAddToCart} disabled={!selectedSize}>
+                                <Button className="w-full" onClick={() => handleAddToCart(product)} disabled={!selectedSize}>
                                     Add to Cart
                                 </Button>
                             </div>

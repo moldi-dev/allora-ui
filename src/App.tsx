@@ -14,6 +14,10 @@ import SecurityPage from "@/pages/security-page.tsx";
 import ProductsPage from "@/pages/products-page.tsx";
 import HelloWorldPage from "@/pages/hello-world-page.tsx";
 import SingleProductPage from "@/pages/single-product-page.tsx";
+import CheckoutPage from "@/pages/checkout-page.tsx";
+import PaymentSuccessPage from "@/pages/payment-success-page.tsx";
+import PaymentFailurePage from "@/pages/payment-failure-page.tsx";
+import OrdersPage from "@/pages/orders-page.tsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -50,6 +54,10 @@ function AppRoutes() {
           <Route path="/products" element={<ProductsPage/>}/>
           <Route path="/hello-world" element={<HelloWorldPage/>}/>
           <Route path="/product/:id" element={<SingleProductPage/>}/>
+          <Route path="/checkout" element={<CheckoutPage/>}/>
+          <Route path="/payment-success" element={<PaymentSuccessPage/>}/>
+          <Route path="/payment-failure" element={<PaymentFailurePage/>}/>
+          <Route path="/orders" element={<OrdersPage/>}/>
           <Route path="*" element={<NotFoundPage/>} />
       </Routes>
     );
@@ -66,7 +74,7 @@ function App() {
                   reverseOrder={false}
                   gutter={8}
                   toastOptions={{
-                      duration: 3000,
+                      duration: 1500,
                   }}
               />
               <ReactQueryDevtools initialIsOpen={false}/>
