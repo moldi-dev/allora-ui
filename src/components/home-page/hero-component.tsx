@@ -22,7 +22,7 @@ function HeroComponent() {
                                 <Link to="/products" className="rounded-md shadow">
                                     <Button
                                         className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white  md:py-4 md:text-lg md:px-10">
-                                        Shop Now
+                                        Shop now
                                     </Button>
                                 </Link>
                             </div>

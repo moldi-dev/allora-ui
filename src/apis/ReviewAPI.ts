@@ -3,6 +3,7 @@ import {HttpResponse, PageResponse, ReviewResponse} from "@/types/responses.ts";
 import {ErrorResponse} from "react-router-dom";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {toast} from "sonner";
+import {ReviewRequest} from "@/types/requests.ts";
 
 async function getAllReviewsByProductId(id: number, page: number) {
     await awaitDeveloperTimeout();
@@ -70,3 +71,50 @@ export const useDeleteReviewMutation = (id: number) => {
         }
     });
 };
+
+async function getCanAuthenticatedUserReviewProductFn(productId: number) {
+    await awaitDeveloperTimeout();
+
+    try {
+        const response = await axiosInstance.get<HttpResponse<boolean>>(`/reviews/authenticated/can-review/product-id=${productId}`);
+        return response.data as HttpResponse<boolean>;
+    }
+
+    catch (error) {
+        return error.response.data as ErrorResponse;
+    }
+}
+
+export const useGetCanAuthenticatedUserReviewProduct = (productId: number) => {
+    return useQuery<HttpResponse<boolean> | ErrorResponse, Error>({
+        queryFn: () => getCanAuthenticatedUserReviewProductFn(productId),
+        queryKey: ["canAuthenticatedUserReviewProduct", productId],
+    })
+}
+
+async function postReviewFn(request: ReviewRequest) {
+    await awaitDeveloperTimeout();
+
+    try {
+        const response = await axiosInstance.post<HttpResponse<ReviewResponse>>("/reviews", request);
+        return response.data as HttpResponse<ReviewResponse>;
+    }
+
+    catch (error) {
+        return error.response.data as ErrorResponse;
+    }
+}
+
+export const usePostReviewMutation = () => {
+    return useMutation<HttpResponse<ReviewResponse> | ErrorResponse, Error, ReviewRequest>({
+        mutationFn: postReviewFn,
+        mutationKey: ["postReview"],
+        onSuccess(response) {
+            return response;
+        },
+        onError(error) {
+            console.error(error);
+            toast.error(GENERIC_ERROR_MESSAGE);
+        }
+    })
+}

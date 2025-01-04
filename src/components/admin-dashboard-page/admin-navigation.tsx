@@ -105,7 +105,7 @@ function AdminNavigation(props: AdminNavigationProps) {
                     </div>
                     <Link to="/home">
                         <Button className="w-full block mt-4">
-                            Back to the store
+                            Go back to the store
                         </Button>
                     </Link>
                 </div>

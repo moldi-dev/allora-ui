@@ -2,15 +2,19 @@ import React, {useEffect, useState} from 'react';
 import {useGetProductByIdQuery} from "@/apis/ProductsAPI.ts";
 import LoadingComponent from "@/components/ui/loading-component.tsx";
 import ErrorComponent from "@/components/ui/error-component.tsx";
-import {isHttpResponse, isPageResponse} from "@/lib/utils.ts";
-import { Plus, Minus } from 'lucide-react'
+import {isErrorResponse, isHttpResponse, isPageResponse} from "@/lib/utils.ts";
+import {Plus, Minus, StarIcon} from 'lucide-react'
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {ProductResponse, ReviewResponse} from "@/types/responses.ts";
 import ImageCarousel from "@/components/ui/image-carousel.tsx";
-import {useGetAllReviewsByProductIdQuery} from "@/apis/ReviewAPI.ts";
+import {
+    useGetAllReviewsByProductIdQuery,
+    useGetCanAuthenticatedUserReviewProduct,
+    usePostReviewMutation
+} from "@/apis/ReviewAPI.ts";
 import ReviewCard from "@/components/single-product-page/review-card.tsx";
 import {
     Pagination,
@@ -21,12 +25,19 @@ import {
 } from "@/components/ui/pagination.tsx";
 import Cart, {CartItem} from "@/lib/cart.ts";
 import {toast} from "react-hot-toast";
+import EmptyComponent from "@/components/empty-component.tsx";
+import {Textarea} from "@/components/ui/textarea.tsx";
+import {SubmitHandler, useForm} from "react-hook-form";
+import {ReviewRequest} from "@/types/requests.ts";
+import LoadingButton from "@/components/ui/loading-button.tsx";
 
 type ProductInformationProps = {
     productId: string;
 }
 
 function ProductInformation(props: ProductInformationProps) {
+    const [finalRating, setFinalRating] = useState<number>(0);
+
     const productDataQuery = useGetProductByIdQuery(parseInt(props.productId, 10));
 
     const [selectedSize, setSelectedSize] = useState<string | null>(null);
@@ -38,6 +49,52 @@ function ProductInformation(props: ProductInformationProps) {
     const [reviews, setReviews] = useState<ReviewResponse[]>([]);
 
     const reviewDataQuery = useGetAllReviewsByProductIdQuery(parseInt(props.productId, 10), page);
+    const canUserReviewProductQuery = useGetCanAuthenticatedUserReviewProduct(parseInt(props.productId, 10));
+
+    const [canUserReview, setCanUserReview] = useState<boolean>(false);
+
+    const postReviewMutation = usePostReviewMutation();
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        setError,
+        clearErrors
+    } = useForm<ReviewRequest>();
+
+    const onSubmit: SubmitHandler<ReviewRequest> = async (data) => {
+        const request: ReviewRequest = {
+            ...data,
+            productId: parseInt(props.productId, 10),
+            rating: finalRating
+        }
+
+        const response = await postReviewMutation.mutateAsync(request);
+
+        if (isHttpResponse(response)) {
+            await reviewDataQuery.refetch();
+            await canUserReviewProductQuery.refetch();
+            toast.success("Your review has been successfully posted!");
+        }
+
+        else if (isErrorResponse(response) && response.validationErrors) {
+            Object.entries(response.validationErrors).forEach(([field, message]) => {
+                setError(field as keyof ReviewRequest, {
+                    type: "server",
+                    message,
+                });
+            });
+
+            setTimeout(() => {
+                clearErrors();
+            }, 3000);
+        }
+
+        else if (isErrorResponse(response)) {
+            toast.error(response.errorMessage);
+        }
+    }
 
     useEffect(() => {
         if (reviewDataQuery.isSuccess && isHttpResponse(reviewDataQuery.data) && isPageResponse(reviewDataQuery.data.body)) {
@@ -46,10 +103,15 @@ function ProductInformation(props: ProductInformationProps) {
         }
     }, [reviewDataQuery.data, reviewDataQuery.isSuccess]);
 
+    useEffect(() => {
+        if (canUserReviewProductQuery.isSuccess && isHttpResponse(canUserReviewProductQuery.data)) {
+            setCanUserReview(canUserReviewProductQuery.data.body);
+        }
+    }, [canUserReviewProductQuery.data, canUserReviewProductQuery.isSuccess]);
+
     const handleAddToCart = (product: ProductResponse) => {
         const sizeId: number = parseInt(selectedSize, 10);
 
-        // TODO: fix the size name logic
         const item: CartItem = {
             name: product.name,
             price: product.price,
@@ -68,13 +130,13 @@ function ProductInformation(props: ProductInformationProps) {
         toast.success("Your item has been added to your cart!");
     }
 
-    if (productDataQuery.isPending || reviewDataQuery.isPending) {
+    if (productDataQuery.isPending || reviewDataQuery.isPending || canUserReviewProductQuery.isPending) {
         return (
             <LoadingComponent />
         )
     }
 
-    else if (productDataQuery.isError || reviewDataQuery.isError) {
+    else if (productDataQuery.isError || reviewDataQuery.isError || canUserReviewProductQuery.isError) {
         return (
             <ErrorComponent/>
         )
@@ -146,40 +208,107 @@ function ProductInformation(props: ProductInformationProps) {
                                     </div>
                                 </div>
                                 <Button className="w-full" onClick={() => handleAddToCart(product)} disabled={!selectedSize}>
-                                    Add to Cart
+                                    Add to cart
                                 </Button>
                             </div>
                         </div>
                     </CardContent>
                 </Card>
 
-                {reviews.length > 0 && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-5 mb-10">
-                        {reviews.map((review) => (
-                            <ReviewCard key={review.reviewId} review={review} />
-                        ))}
-                    </div>
+                {reviews.length === 0 && (
+                    <EmptyComponent title="Allora" content="This product hasn't received any reviews yet. Be the first to share your thoughts and help others make an informed decision! Your feedback could be invaluable to those considering a purchase."/>
                 )}
 
-                {reviews.length > 0 &&
-                    <Pagination className="mt-5 flex justify-center mb-10">
-                        <PaginationContent>
-                            {page > 0 && (
+                {reviews.length > 0 && (
+                    <>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-5 mb-10">
+                            {reviews.map((review) => (
+                                <ReviewCard key={review.reviewId} review={review}/>
+                            ))}
+                        </div>
+                        <Pagination className="mt-5 flex justify-center mb-10">
+                            <PaginationContent>
+                                {page > 0 && (
+                                    <PaginationItem>
+                                        <PaginationPrevious onClick={() => setPage((prevState) => prevState - 1)}/>
+                                    </PaginationItem>
+                                )}
                                 <PaginationItem>
-                                    <PaginationPrevious onClick={() => setPage((prevState) => prevState - 1)} />
+                                    <PaginationLink isActive={true}>{page + 1}</PaginationLink>
                                 </PaginationItem>
-                            )}
-                            <PaginationItem>
-                                <PaginationLink isActive={true}>{page + 1}</PaginationLink>
-                            </PaginationItem>
-                            {page < totalPages - 1 && (
-                                <PaginationItem>
-                                    <PaginationNext onClick={() => setPage((prevState) => prevState + 1)} />
-                                </PaginationItem>
-                            )}
-                        </PaginationContent>
-                    </Pagination>
-                }
+                                {page < totalPages - 1 && (
+                                    <PaginationItem>
+                                        <PaginationNext onClick={() => setPage((prevState) => prevState + 1)}/>
+                                    </PaginationItem>
+                                )}
+                            </PaginationContent>
+                        </Pagination>
+
+                    </>
+                )}
+
+                {canUserReview && (
+                    <Card className="w-full max-w-md mx-auto mt-10 mb-10">
+                        <CardHeader>
+                            <CardTitle>Review our product</CardTitle>
+                            <CardDescription>
+                                We’d love to hear your thoughts on our product! Your feedback helps us improve
+                                and also guides other customers in making confident choices. Whether you’re thrilled
+                                with your experience or have any suggestions, your voice matters to us.
+                                Share your review today!
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
+                                <div className="flex items-center gap-2">
+                                    <Label htmlFor="rating" className="text-sm font-medium">
+                                        Rating <span className="text-red-500">*</span> :
+                                    </Label>
+                                    <div className="flex items-center gap-1">
+                                        {[...Array(5)].map((_, index) => (
+                                            <StarIcon
+                                                key={index}
+                                                onClick={() => setFinalRating(index + 1)}
+                                                className={`h-6 w-6 cursor-pointer ${
+                                                    index < finalRating ? 'text-yellow-500' : 'text-gray-300'
+                                                }`}
+                                            />
+                                        ))}
+                                        {errors.rating && (
+                                            <p className="text-red-600 text-sm mt-1">
+                                                {errors.rating.message}
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="grid gap-2">
+                                    <Label htmlFor="comment" className="text-sm font-medium">
+                                        Comment
+                                    </Label>
+                                    <Textarea
+                                        id="comment"
+                                        {...register("comment")}
+                                        placeholder="Share your thoughts on our product"
+                                        className="min-h-[100px]"
+                                    />
+                                    {errors.comment && (
+                                        <p className="text-red-600 text-sm mt-1">
+                                            {errors.comment.message}
+                                        </p>
+                                    )}
+                                </div>
+                                <LoadingButton
+                                    type="submit"
+                                    clipLoaderColor="white"
+                                    isLoading={postReviewMutation.isPending}
+                                    className="w-full"
+                                >
+                                    Submit review
+                                </LoadingButton>
+                            </form>
+                        </CardContent>
+                    </Card>
+                )}
             </>
         );
     }

@@ -354,7 +354,7 @@ function ProductsAndFiltersComponent() {
                                 isLoading={getFilteredProducts.isPending}
                                 type="submit"
                             >
-                                Apply Filters
+                                Apply filters
                             </LoadingButton>
                         </form>
                     </aside>
