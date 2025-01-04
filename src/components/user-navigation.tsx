@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { UserResponse } from "@/types/responses.ts";
 import {ShoppingCart, Shirt, User, AppWindowMac, ClipboardList, LockIcon} from "lucide-react";
 import {Link} from "react-router-dom";
@@ -14,8 +14,8 @@ import {GENERIC_ERROR_MESSAGE} from "@/constants.ts";
 import LoadingButton from "@/components/ui/loading-button.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar.tsx";
-import { Trash2, Minus, Plus, X } from 'lucide-react'
-import {Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger} from "@/components/ui/sheet"
+import { Trash2 } from 'lucide-react'
+import {Sheet, SheetContent, SheetHeader, SheetTitle} from "@/components/ui/sheet"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 import Cart from "@/lib/cart.ts";
@@ -27,6 +27,8 @@ type UserNavigationProps = {
 function UserNavigation(props: UserNavigationProps) {
     const [isCartOpen, setCartOpen] = useState<boolean>(false);
     const [isUserDetailsOpen, setIsUserDetailsOpen] = useState<boolean>(false);
+
+    const [totalItems, setTotalItems] = useState<number>(Cart.getTotalItems());
 
     const signOutMutation = useSignOutMutation();
 
@@ -52,9 +54,15 @@ function UserNavigation(props: UserNavigationProps) {
 
     function handleRemoveItem(productId: number, productSizeId: number) {
         Cart.removeItem(productId, productSizeId);
-        toggleCart();
-        toast.success("The item has been removed successfully from the cart!");
     }
+
+    useEffect(() => {
+        const updateTotalItems = () => setTotalItems(Cart.getTotalItems());
+
+        Cart.subscribe(updateTotalItems);
+
+        return () => Cart.unsubscribe(updateTotalItems);
+    }, []);
 
     if (props.user === null) {
         return (
@@ -74,10 +82,12 @@ function UserNavigation(props: UserNavigationProps) {
                                         className="h-6 w-6 hover:cursor-pointer"
                                         onClick={toggleCart}
                                     />
-                                    <div
-                                        className="absolute bottom-5 right-0 left-2 bg-red-500 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
-                                        {Cart.getTotalItems()}
-                                    </div>
+                                    {totalItems > 0 &&
+                                        <div
+                                            className="absolute bottom-5 right-0 left-2 bg-red-500 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
+                                            {totalItems}
+                                        </div>
+                                    }
                                 </div>
                                 <div className="relative">
                                     <Link to="/sign-in">
@@ -107,7 +117,7 @@ function UserNavigation(props: UserNavigationProps) {
                                                     alt={item.name}
                                                 />
                                             </div>
-                                            <div className="flex-1 space-y-1">
+                                            <div className="flex-1 space-y-1 space-x-3">
                                                 <h3 className="font-medium">{item.name}</h3>
                                                 <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
                                                 <p className="text-sm text-gray-500">Price per item: ${item.price.toFixed(2)}</p>
@@ -126,7 +136,7 @@ function UserNavigation(props: UserNavigationProps) {
                                                 </button>
                                             </div>
                                         </div>
-                                        {index < Cart.getTotalItems() - 1 && <Separator />}
+                                        {index < totalItems - 1 && <Separator />}
                                     </div>
                                 ))}
                             </ScrollArea>
@@ -135,7 +145,7 @@ function UserNavigation(props: UserNavigationProps) {
                                     <span className="text-lg font-medium">Total</span>
                                     <span className="text-lg font-bold">${Cart.getTotalPrice().toFixed(2)}</span>
                                 </div>
-                                {Cart.getTotalItems() > 0 &&
+                                {totalItems > 0 &&
                                     <Link to="/sign-in">
                                         <Button className="w-full mt-4" size="lg">
                                             Sign in to order
@@ -167,7 +177,7 @@ function UserNavigation(props: UserNavigationProps) {
                                                     alt={item.name}
                                                 />
                                             </div>
-                                            <div className="flex-1 space-y-1">
+                                            <div className="flex-1 space-y-1 space-x-3">
                                                 <h3 className="font-medium">{item.name}</h3>
                                                 <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
                                                 <p className="text-sm text-gray-500">Price per item: ${item.price.toFixed(2)}</p>
@@ -186,7 +196,7 @@ function UserNavigation(props: UserNavigationProps) {
                                                 </button>
                                             </div>
                                         </div>
-                                        {index < Cart.getTotalItems() - 1 && <Separator />}
+                                        {index < totalItems - 1 && <Separator />}
                                     </div>
                                 ))}
                             </ScrollArea>
@@ -195,7 +205,7 @@ function UserNavigation(props: UserNavigationProps) {
                                     <span className="text-lg font-medium">Total</span>
                                     <span className="text-lg font-bold">${Cart.getTotalPrice().toFixed(2)}</span>
                                 </div>
-                                {Cart.getTotalItems() > 0 &&
+                                {totalItems > 0 &&
                                     <Link to="/checkout">
                                         <Button className="w-full mt-4" size="lg">
                                             Proceed to Checkout
@@ -279,10 +289,12 @@ function UserNavigation(props: UserNavigationProps) {
                                         className="h-6 w-6 hover:cursor-pointer"
                                         onClick={toggleCart}
                                     />
-                                    <div
-                                        className="absolute bottom-5 right-0 left-2 bg-red-500 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
-                                        {Cart.getTotalItems()}
-                                    </div>
+                                    {totalItems > 0 &&
+                                        <div
+                                            className="absolute bottom-5 right-0 left-2 bg-red-500 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
+                                            {totalItems}
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>

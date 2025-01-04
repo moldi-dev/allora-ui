@@ -11,8 +11,11 @@ export type CartItem = {
     image: string;
 }
 
+type CartListener = () => void;
+
 class Cart {
     private static STORAGE_KEY = 'shoppingCart';
+    private static listeners: CartListener[] = [];
 
     static getCart(): CartItem[] {
         const cartJson = localStorage.getItem(this.STORAGE_KEY);
@@ -21,6 +24,7 @@ class Cart {
 
     private static saveCart(cart: CartItem[]): void {
         localStorage.setItem(this.STORAGE_KEY, JSON.stringify(cart));
+        this.notifyListeners();
     }
 
     static addItem(item: CartItem): void {
@@ -43,29 +47,6 @@ class Cart {
         this.saveCart(cart);
     }
 
-    static updateItem(productId: number, productSizeId: number, quantity: number): void {
-        const cart = this.getCart();
-
-        const item = cart.find(
-            (cartItem) =>
-                cartItem.productId === productId &&
-                cartItem.productSizeId === productSizeId
-        );
-
-        if (item) {
-            if (quantity > 0) {
-                item.quantity = quantity;
-            }
-
-            else {
-                this.removeItem(productId, productSizeId);
-                return;
-            }
-        }
-
-        this.saveCart(cart);
-    }
-
     static removeItem(productId: number, productSizeId: number): void {
         const cart = this.getCart().filter(
             (cartItem) =>
@@ -77,6 +58,7 @@ class Cart {
 
     static clearCart(): void {
         localStorage.removeItem(this.STORAGE_KEY);
+        this.notifyListeners();
     }
 
     static getTotalItems(): number {
@@ -84,12 +66,11 @@ class Cart {
         return cart.reduce((total, item) => total + item.quantity, 0);
     }
 
-    static getItem(id: number) {
+    static getTotalQuantityForItem(productId: number) {
         const cart = this.getCart();
-
-        return cart.find(
-            (cartItem) => cartItem.productId === id
-        );
+        return cart
+            .filter(cartItem => cartItem.productId === productId)
+            .reduce((total, cartItem) => total + cartItem.quantity, 0);
     }
 
     static getAllItems(): CartItem[] {
@@ -103,6 +84,18 @@ class Cart {
         cart.map((item) => total += item.quantity * item.price);
 
         return total;
+    }
+
+    static subscribe(listener: CartListener): void {
+        this.listeners.push(listener);
+    }
+
+    static unsubscribe(listener: CartListener): void {
+        this.listeners = this.listeners.filter((l) => l !== listener);
+    }
+
+    private static notifyListeners(): void {
+        this.listeners.forEach((listener) => listener());
     }
 }
 

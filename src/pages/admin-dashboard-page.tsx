@@ -5,18 +5,20 @@ import ErrorPage from "@/pages/error-page.tsx";
 import {isHttpResponse} from "@/lib/utils.ts";
 import {Navigate, useSearchParams} from "react-router-dom";
 import AdminNavigation from "@/components/admin-dashboard-page/admin-navigation.tsx";
-import {ClipboardList, ShoppingBag, Star, Users} from "lucide-react";
+import {Bot, ClipboardList, ShoppingBag, Star, Users} from "lucide-react";
 import ProductsComponent from "@/components/admin-dashboard-page/products-component.tsx";
 import EmptyComponent from "@/components/empty-component.tsx";
 import UsersComponent from "@/components/admin-dashboard-page/users-component.tsx";
 import ReviewsComponent from "@/components/admin-dashboard-page/reviews-component.tsx";
 import OrdersComponent from "@/components/admin-dashboard-page/orders-component.tsx";
+import AiAssistantComponent from "@/components/admin-dashboard-page/ai-assistant-component.tsx";
 
 const components = [
     { name: "Users", icon: Users, param: "users" },
     { name: "Products", icon: ShoppingBag, param: "products" },
     { name: "Reviews", icon: Star, param: "reviews" },
     { name: "Orders", icon: ClipboardList, param: "orders" },
+    { name: "AI Assistant", icon: Bot, param: "ai-assistant"}
 ]
 
 function AdminDashboardPage() {
@@ -60,6 +62,7 @@ function AdminDashboardPage() {
                     {activeComponent === "users" && <UsersComponent/>}
                     {activeComponent === "reviews" && <ReviewsComponent/>}
                     {activeComponent === "orders" && <OrdersComponent/>}
+                    {activeComponent === "ai-assistant" && <AiAssistantComponent/>}
                     {activeComponent === null && (
                         <EmptyComponent
                             title="Allora Admin Dashboard"

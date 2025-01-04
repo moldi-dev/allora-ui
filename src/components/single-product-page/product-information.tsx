@@ -110,6 +110,8 @@ function ProductInformation(props: ProductInformationProps) {
     }, [canUserReviewProductQuery.data, canUserReviewProductQuery.isSuccess]);
 
     const handleAddToCart = (product: ProductResponse) => {
+        const totalProductQuantity = Cart.getTotalQuantityForItem(product.productId);
+
         const sizeId: number = parseInt(selectedSize, 10);
 
         const item: CartItem = {
@@ -125,9 +127,13 @@ function ProductInformation(props: ProductInformationProps) {
             productBrandName: product.brand.name
         };
 
-        Cart.addItem(item);
+        if (totalProductQuantity + item.quantity <= product.stock) {
+            Cart.addItem(item);
+        }
 
-        toast.success("Your item has been added to your cart!");
+        else {
+            toast.error("There aren't enough products in stock to add to your cart!");
+        }
     }
 
     if (productDataQuery.isPending || reviewDataQuery.isPending || canUserReviewProductQuery.isPending) {
@@ -264,16 +270,18 @@ function ProductInformation(props: ProductInformationProps) {
                                     <Label htmlFor="rating" className="text-sm font-medium">
                                         Rating <span className="text-red-500">*</span> :
                                     </Label>
-                                    <div className="flex items-center gap-1">
-                                        {[...Array(5)].map((_, index) => (
-                                            <StarIcon
-                                                key={index}
-                                                onClick={() => setFinalRating(index + 1)}
-                                                className={`h-6 w-6 cursor-pointer ${
-                                                    index < finalRating ? 'text-yellow-500' : 'text-gray-300'
-                                                }`}
-                                            />
-                                        ))}
+                                    <div className="flex flex-col">
+                                        <div className="flex items-center gap-1">
+                                            {[...Array(5)].map((_, index) => (
+                                                <StarIcon
+                                                    key={index}
+                                                    onClick={() => setFinalRating(index + 1)}
+                                                    className={`h-6 w-6 cursor-pointer ${
+                                                        index < finalRating ? 'text-yellow-500' : 'text-gray-300'
+                                                    }`}
+                                                />
+                                            ))}
+                                        </div>
                                         {errors.rating && (
                                             <p className="text-red-600 text-sm mt-1">
                                                 {errors.rating.message}

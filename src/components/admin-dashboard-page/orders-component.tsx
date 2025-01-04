@@ -34,7 +34,7 @@ function OrdersComponent() {
     const [isDeleteOrderDialogOpen, setIsDeleteOrderDialogOpen] = useState<boolean>(false);
     const [isUpdateOrderDialogOpen, setIsUpdateOrderDialogOpen] = useState<boolean>(false);
 
-    async function handleOrderProduct(order: OrderResponse) {
+    async function handleDeleteOrder(order: OrderResponse) {
         selectedOrderRef.current = order;
         setIsDeleteOrderDialogOpen(true);
     }
@@ -153,7 +153,7 @@ function OrdersComponent() {
                                     <CardFooter className="flex justify-between items-center">
                                         <p className="font-bold">Total: ${order.totalPrice.toFixed(2)}</p>
                                         <div className="space-x-2">
-                                            <Button variant="destructive" size="sm" onClick={() => handleOrderProduct(order)}>
+                                            <Button variant="destructive" size="sm" onClick={() => handleDeleteOrder(order)}>
                                                 <Trash2 className="w-4 h-4 mr-2"/>
                                                 Delete
                                             </Button>
