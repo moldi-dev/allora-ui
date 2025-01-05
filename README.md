@@ -6,7 +6,7 @@ Welcome to Allora (UI only). This React application constitutes the user interfa
 - Password updating and resetting through a code sent on email
 - Payment integration using Stripe
 - Placing orders and reviews for orders which are marked as delivered
-- Admin dashboard
+- Admin dashboard with an AI assistant
 
 ## Technologies used
 - React with Typescript

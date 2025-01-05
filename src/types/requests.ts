@@ -26,6 +26,10 @@ export type OrderUpdateRequest = {
     orderStatus: OrderStatus;
 }
 
+export type AiPromptRequest = {
+    prompt: string;
+}
+
 export type OrderLineProductRequest = {
     productId: number;
     quantity: number;

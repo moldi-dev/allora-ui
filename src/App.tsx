@@ -73,7 +73,7 @@ function App() {
                   reverseOrder={false}
                   gutter={8}
                   toastOptions={{
-                      duration: 1500,
+                      duration: 3000,
                   }}
               />
               <ReactQueryDevtools initialIsOpen={false}/>

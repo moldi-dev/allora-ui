@@ -83,6 +83,10 @@ export type UserPersonalInformationResponse = {
     address: string;
 }
 
+export type AiPromptResponse = {
+    response: string;
+}
+
 export type UserResponse = {
     userId: number;
     username: string;

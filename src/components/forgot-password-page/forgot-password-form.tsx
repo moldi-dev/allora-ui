@@ -39,12 +39,7 @@ function ForgotPasswordForm() {
 
         const response = await passwordResetTokenMutation.mutateAsync(passwordResetTokenRequest);
 
-        if (isHttpResponse(response)) {
-            toast.success("Follow the steps sent on your email in order to reset your password!");
-            setIsPasswordResetTokenSent(true);
-        }
-
-        else if (isErrorResponse(response) && response.validationErrors) {
+        if (isErrorResponse(response) && response.validationErrors) {
             Object.entries(response.validationErrors).forEach(([field, message]) => {
                 passwordResetTokenRequestForm.setError(field as keyof PasswordResetTokenRequest, {
                     type: "server",
@@ -57,8 +52,9 @@ function ForgotPasswordForm() {
             }, 3000);
         }
 
-        else if (isErrorResponse(response)) {
-            toast.error(response.errorMessage);
+        else {
+            toast("If the email you provided matches our records, we have sent the code to reset your password to your email address!");
+            setIsPasswordResetTokenSent(true);
         }
     };
 
