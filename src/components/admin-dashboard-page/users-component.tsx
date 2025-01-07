@@ -5,7 +5,7 @@ import ErrorComponent from "@/components/ui/error-component.tsx";
 import {UserResponse} from "@/types/responses.ts";
 import {isHttpResponse, isPageResponse} from "@/lib/utils.ts";
 import EmptyComponent from "@/components/empty-component.tsx";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import {Badge} from "@/components/ui/badge.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {

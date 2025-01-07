@@ -1,9 +1,9 @@
 import React from 'react';
 import {ReviewResponse} from "@/types/responses.ts";
-import { Star } from 'lucide-react'
-import { format } from "date-fns"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import {Star} from 'lucide-react'
+import {format} from "date-fns"
+import {Avatar, AvatarFallback} from "@/components/ui/avatar"
+import {Card, CardContent, CardFooter, CardHeader} from "@/components/ui/card"
 
 type ReviewCardProps = {
     review: ReviewResponse

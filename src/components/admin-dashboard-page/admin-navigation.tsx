@@ -5,12 +5,7 @@ import {ScrollArea} from "@/components/ui/scroll-area.tsx";
 import {Separator} from "@/components/ui/separator.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {Menu} from "lucide-react"; // Menu icon for mobile
-import {
-    DropdownMenu,
-    DropdownMenuTrigger,
-    DropdownMenuContent,
-    DropdownMenuItem,
-} from "@/components/ui/dropdown-menu"; // Import from Shadcn UI
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"; // Import from Shadcn UI
 
 type AdminNavigationProps = {
     user: UserResponse;

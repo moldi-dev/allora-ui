@@ -31,7 +31,7 @@ axiosInstance.interceptors.response.use(
     },
     (error) => {
         if (error.response) {
-            //console.clear(); // TODO: uncomment the console clear once the API is completely developed
+            console.clear();
         }
         return Promise.reject(error);
     }

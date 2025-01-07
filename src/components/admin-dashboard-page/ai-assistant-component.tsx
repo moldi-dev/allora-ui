@@ -1,4 +1,4 @@
-import {AiPromptRequest, SignInRequest} from '@/types/requests';
+import {AiPromptRequest} from '@/types/requests';
 import React, {useEffect, useRef, useState} from 'react';
 import {AiPromptResponse} from "@/types/responses.ts";
 import {Textarea} from "@/components/ui/textarea.tsx";
@@ -7,9 +7,11 @@ import {usePromptAiMutation} from "@/apis/AiAPI.ts";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {isErrorResponse, isHttpResponse} from "@/lib/utils.ts";
 import {toast} from "react-hot-toast";
+import {Send} from "lucide-react";
 
 const startingMessages: ChatMessage[] = [
-    { response: "Hello! I'm an AI assistant trained to generate and execute SQL on the database. Please tell me what I should do! (e.g., ask me 'what are the prices for each product?'" }
+    { response: "Hello! I'm an AI assistant trained to generate and execute SQL on the database. " +
+            "Please tell me what I should do! (e.g., ask me to get the prices for each product)" }
 ]
 
 type ChatMessage = AiPromptRequest | AiPromptResponse;
@@ -110,20 +112,20 @@ function AiAssistantComponent() {
                       className="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       rows={3}
                   />
-                    {errors.prompt && (
-                        <p className="text-red-600 text-sm mt-1">
-                            {errors.prompt.message}
-                        </p>
-                    )}
                     <LoadingButton
                         clipLoaderColor="white"
                         isLoading={promptAiMutation.isPending}
                         type="submit"
                         className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
-                        Send
+                        <Send className="w-4 h-4 mr-2"/> Send
                     </LoadingButton>
                 </div>
+                {errors.prompt && (
+                    <p className="text-red-600 text-sm mt-1">
+                        {errors.prompt.message}
+                    </p>
+                )}
             </form>
         </div>
     )

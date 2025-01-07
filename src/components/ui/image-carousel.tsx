@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { Button } from "@/components/ui/button"
+import {useState} from 'react'
+import {ChevronLeft, ChevronRight} from 'lucide-react'
+import {Button} from "@/components/ui/button"
 import ZoomableImage from "@/components/ui/zoomable-image.tsx";
 import {ImageResponse} from "@/types/responses.ts";
 

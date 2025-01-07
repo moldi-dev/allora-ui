@@ -1,6 +1,6 @@
 import React from 'react';
 import {UserResponse} from "@/types/responses.ts";
-import {Card, CardDescription, CardHeader, CardTitle, CardContent, CardFooter} from '@/components/ui/card';
+import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from '@/components/ui/card';
 import {Input} from "@/components/ui/input.tsx";
 import {Label} from "@/components/ui/label";
 import LoadingButton from "@/components/ui/loading-button.tsx";

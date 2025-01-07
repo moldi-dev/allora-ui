@@ -15,7 +15,8 @@ import {
     Pagination,
     PaginationContent,
     PaginationItem,
-    PaginationLink, PaginationNext,
+    PaginationLink,
+    PaginationNext,
     PaginationPrevious
 } from "@/components/ui/pagination.tsx";
 import UpdateProductDialog from "@/components/admin-dashboard-page/update-product-dialog.tsx";

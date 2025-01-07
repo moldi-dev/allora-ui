@@ -71,7 +71,7 @@ function UserOrdersComponent() {
 
     else {
         if (orderData.length === 0) {
-            return <EmptyComponent title="Allora" content="It looks like you haven’t placed any orders yet! Start exploring our latest collections and find styles that match your unique look."/>
+            return <EmptyComponent title="Allora" content="It looks like you haven't placed any orders yet! Start exploring our latest collections and find styles that match your unique look."/>
         }
 
         else {

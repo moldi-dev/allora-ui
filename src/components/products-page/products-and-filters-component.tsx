@@ -8,11 +8,7 @@ import ErrorComponent from "@/components/ui/error-component.tsx";
 import {useGetAllProductGendersQuery} from "@/apis/ProductGenderAPI.ts";
 import {useGetAllProductCategoriesInfiniteQuery} from "@/apis/ProductCategoryAPI.ts";
 import {useGetAllProductBrandsInfiniteQuery} from "@/apis/ProductBrandAPI.ts";
-import {
-    ProductGenderResponse,
-    ProductResponse,
-    ProductSizeResponse
-} from "@/types/responses.ts";
+import {ProductGenderResponse, ProductResponse, ProductSizeResponse} from "@/types/responses.ts";
 import {isErrorResponse, isHttpResponse, isPageResponse} from "@/lib/utils.ts";
 import {
     Pagination,
@@ -24,7 +20,7 @@ import {
 } from "@/components/ui/pagination.tsx";
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group.tsx";
 import {Label} from "@/components/ui/label.tsx";
-import {useForm, Controller, SubmitHandler} from "react-hook-form";
+import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {ProductFilterRequest} from "@/types/requests.ts";
 import LoadingButton from "@/components/ui/loading-button.tsx";
 import {useGetFilteredProductsMutation} from "@/apis/ProductsAPI.ts";

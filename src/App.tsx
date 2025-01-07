@@ -2,7 +2,6 @@ import {useEffect} from "react";
 import {BrowserRouter, Navigate, Route, Routes, useLocation} from "react-router-dom";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import SignInPage from "@/pages/sign-in-page.tsx";
-import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import SignUpPage from "@/pages/sign-up-page.tsx";
 import NotFoundPage from "@/pages/not-found-page.tsx";
 import HomePage from "@/pages/home-page.tsx";
@@ -76,7 +75,6 @@ function App() {
                       duration: 3000,
                   }}
               />
-              <ReactQueryDevtools initialIsOpen={false}/>
           </QueryClientProvider>
       </BrowserRouter>
   )

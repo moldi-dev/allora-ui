@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import { UserResponse } from "@/types/responses.ts";
-import {ShoppingCart, Shirt, User, AppWindowMac, ClipboardList, LockIcon} from "lucide-react";
+import {UserResponse} from "@/types/responses.ts";
+import {AppWindowMac, ClipboardList, LockIcon, Shirt, ShoppingCart, Trash2, User} from "lucide-react";
 import {Link} from "react-router-dom";
 import {
     DropdownMenu,
-    DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {useSignOutMutation} from "@/apis/AuthenticationAPI.ts";
@@ -14,10 +16,9 @@ import {GENERIC_ERROR_MESSAGE} from "@/constants.ts";
 import LoadingButton from "@/components/ui/loading-button.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar.tsx";
-import { Trash2 } from 'lucide-react'
 import {Sheet, SheetContent, SheetHeader, SheetTitle} from "@/components/ui/sheet"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Separator } from "@/components/ui/separator"
+import {ScrollArea} from "@/components/ui/scroll-area"
+import {Separator} from "@/components/ui/separator"
 import Cart from "@/lib/cart.ts";
 
 type UserNavigationProps = {

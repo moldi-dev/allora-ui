@@ -3,11 +3,11 @@ import {useGetProductByIdQuery} from "@/apis/ProductsAPI.ts";
 import LoadingComponent from "@/components/ui/loading-component.tsx";
 import ErrorComponent from "@/components/ui/error-component.tsx";
 import {isErrorResponse, isHttpResponse, isPageResponse} from "@/lib/utils.ts";
-import {Plus, Minus, StarIcon} from 'lucide-react'
-import { Button } from "@/components/ui/button"
+import {Minus, Plus, StarIcon} from 'lucide-react'
+import {Button} from "@/components/ui/button"
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import {Label} from "@/components/ui/label"
+import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group"
 import {ProductResponse, ReviewResponse} from "@/types/responses.ts";
 import ImageCarousel from "@/components/ui/image-carousel.tsx";
 import {
@@ -20,7 +20,8 @@ import {
     Pagination,
     PaginationContent,
     PaginationItem,
-    PaginationLink, PaginationNext,
+    PaginationLink,
+    PaginationNext,
     PaginationPrevious
 } from "@/components/ui/pagination.tsx";
 import Cart, {CartItem} from "@/lib/cart.ts";
