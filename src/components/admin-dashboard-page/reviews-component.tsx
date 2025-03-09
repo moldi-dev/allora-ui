@@ -120,7 +120,7 @@ function ReviewsComponent() {
                                     <CardContent>
                                         {review.comment && <p className="text-gray-600">{review.comment}</p>}
                                         <p className="text-sm text-gray-500">
-                                            Posted on {format(review.reviewDate, "MMMM d, yyyy")}
+                                            Posted on {format(review.createdDate, "MMMM d, yyyy")}
                                         </p>
                                     </CardContent>
                                     <CardFooter>

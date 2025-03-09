@@ -12,13 +12,16 @@ import UsersComponent from "@/components/admin-dashboard-page/users-component.ts
 import ReviewsComponent from "@/components/admin-dashboard-page/reviews-component.tsx";
 import OrdersComponent from "@/components/admin-dashboard-page/orders-component.tsx";
 import AiAssistantComponent from "@/components/admin-dashboard-page/ai-assistant-component.tsx";
+import {ChatBubbleIcon} from "@radix-ui/react-icons";
+import PublicChatComponent from "@/components/admin-dashboard-page/public-chat-component.tsx";
 
 const components = [
     { name: "Users", icon: Users, param: "users" },
     { name: "Products", icon: ShoppingBag, param: "products" },
     { name: "Reviews", icon: Star, param: "reviews" },
     { name: "Orders", icon: ClipboardList, param: "orders" },
-    { name: "AI Assistant", icon: Bot, param: "ai-assistant"}
+    { name: "AI Assistant", icon: Bot, param: "ai-assistant"},
+    { name: "Public Chat", icon: ChatBubbleIcon, param: "public-chat"}
 ]
 
 function AdminDashboardPage() {
@@ -63,6 +66,7 @@ function AdminDashboardPage() {
                     {activeComponent === "reviews" && <ReviewsComponent/>}
                     {activeComponent === "orders" && <OrdersComponent/>}
                     {activeComponent === "ai-assistant" && <AiAssistantComponent/>}
+                    {activeComponent === "public-chat" && <PublicChatComponent userInformation={userData.userPersonalInformation}/>}
                     {activeComponent === null && (
                         <EmptyComponent
                             title="Allora Admin Dashboard"

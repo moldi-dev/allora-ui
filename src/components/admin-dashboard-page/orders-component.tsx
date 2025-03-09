@@ -107,7 +107,7 @@ function OrdersComponent() {
                                             <Badge>{order.orderStatus}</Badge>
                                         </div>
                                         <p className="text-sm text-gray-500">Ordered
-                                            on {new Date(order.orderDate).toLocaleString()}</p>
+                                            on {new Date(order.createdDate).toLocaleString()}</p>
                                     </CardHeader>
                                     <CardContent>
                                         <div className="space-y-4">

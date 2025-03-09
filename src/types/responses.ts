@@ -1,4 +1,5 @@
 import {OrderStatus} from "@/types/requests.ts";
+import {ChatMessageType} from "@/enums/enums.ts";
 
 export type HttpResponse<T> = {
     timestamp?: string;
@@ -30,7 +31,7 @@ export type OrderResponse = {
     totalPrice: number;
     orderStatus: OrderStatus;
     userPersonalInformation: UserPersonalInformationResponse;
-    orderDate: string;
+    createdDate: string;
 }
 
 export type ProductBrandResponse = {
@@ -73,7 +74,7 @@ export type ReviewResponse = {
     rating: number;
     firstName: string;
     lastName: string;
-    reviewDate: string;
+    createdDate: string;
 }
 
 export type UserPersonalInformationResponse = {
@@ -127,6 +128,15 @@ export type PageResponse<T> = {
     numberOfElements: number;
     empty: boolean;
 };
+
+export type PublicChatMessageResponse = {
+    personalInformationId: number;
+    firstName: string;
+    lastName: string;
+    messageType: ChatMessageType;
+    content: string;
+    createdDate: string;
+}
 
 type ValidationErrors = {
     [field: string]: string;

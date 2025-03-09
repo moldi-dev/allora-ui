@@ -47,7 +47,7 @@ function ReviewCard(props: ReviewCardProps) {
             </CardContent>
             <CardFooter>
                 <p className="text-sm text-gray-500">
-                    Posted on {format(props.review.reviewDate, "MMMM d, yyyy")}
+                    Posted on {format(props.review.createdDate, "MMMM d, yyyy")}
                 </p>
             </CardFooter>
         </Card>

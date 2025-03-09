@@ -87,7 +87,7 @@ function UserOrdersComponent() {
                                             {order.orderStatus.charAt(0).toUpperCase() + order.orderStatus.slice(1)}
                                         </Badge>
                                     </div>
-                                    <p className="text-sm text-gray-600">Ordered on: {new Date(order.orderDate).toLocaleString()}</p>
+                                    <p className="text-sm text-gray-600">Ordered on: {new Date(order.createdDate).toLocaleString()}</p>
                                 </CardHeader>
                                 <CardContent className="p-6">
                                     <div className="space-y-4">

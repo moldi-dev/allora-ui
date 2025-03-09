@@ -266,7 +266,7 @@ function UserNavigation(props: UserNavigationProps) {
                                                 </Link>
                                             }
                                             <DropdownMenuSeparator/>
-                                            <div className="px-4 py-2 text-sm text-gray-500">
+                                            <div className="pl-2 py-2 text-sm text-gray-500">
                                                 {props.user.username} <br/>
                                                 {props.user.email}
                                             </div>

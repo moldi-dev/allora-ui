@@ -1,5 +1,5 @@
 # Allora
-Welcome to Allora (UI only). This React application constitutes the user interface for the "se-project" repository.
+Welcome to Allora (UI only). This React application constitutes the user interface for the Allora backend server.
 
 ## Features
 - Sign up and sign in
@@ -7,6 +7,7 @@ Welcome to Allora (UI only). This React application constitutes the user interfa
 - Payment integration using Stripe
 - Placing orders and reviews for orders which are marked as delivered
 - Admin dashboard with an AI assistant
+- Private chat room for administrators
 
 ## Technologies used
 - React with Typescript

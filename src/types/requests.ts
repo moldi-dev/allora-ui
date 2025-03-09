@@ -93,3 +93,7 @@ export type ProductFilterRequest = {
     sort: string;
 };
 
+export type PublicChatMessageRequest = {
+    content: string;
+}
+

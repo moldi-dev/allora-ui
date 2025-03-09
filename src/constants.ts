@@ -4,6 +4,8 @@ import {fetchCsrfToken} from "@/apis/CSRFAPI.ts";
 const BACKEND_BASE_PATH = "http://localhost:8080";
 const BACKEND_BASE_API_PATH = `${BACKEND_BASE_PATH}/api/v1`;
 
+export const ADMIN_WEBSOCKET_URL = `${BACKEND_BASE_PATH}/admin-websocket`;
+
 export const GENERIC_ERROR_MESSAGE = "We're sorry, but an unexpected error has occurred. Please try again later or contact support if the issue persists";
 
 export const RECAPTCHA_SITE_KEY = "6Ld0Uj4qAAAAAOe7jucWeXs7q9qO_nZouyaDbUmB";
