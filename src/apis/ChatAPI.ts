@@ -1,4 +1,4 @@
-import { axiosInstance, GENERIC_ERROR_MESSAGE } from "@/constants";
+import {awaitDeveloperTimeout, axiosInstance, GENERIC_ERROR_MESSAGE} from "@/constants";
 import { PublicChatMessageRequest } from "@/types/requests";
 import {ErrorResponse, PublicChatMessageResponse } from "@/types/responses";
 import { useMutation } from "@tanstack/react-query";
@@ -55,6 +55,8 @@ export const useDisconnectFromPublicChatMutation = () => {
 }
 
 async function sendPublicChatMessageFn(request: PublicChatMessageRequest) {
+    await awaitDeveloperTimeout();
+
     try {
         const response = await axiosInstance.post<PublicChatMessageResponse | ErrorResponse>("/chat-messages/authenticated/send-public-message", request);
         return response.data as PublicChatMessageResponse;

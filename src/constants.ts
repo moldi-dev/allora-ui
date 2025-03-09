@@ -20,6 +20,7 @@ axiosInstance.interceptors.request.use(
         if (["post", "patch", "delete"].includes(config.method.toLowerCase())) {
             config.headers["X-XSRF-TOKEN"] = await fetchCsrfToken();
         }
+
         return config;
     },
     (error) => {
@@ -35,12 +36,13 @@ axiosInstance.interceptors.response.use(
         if (error.response) {
             console.clear();
         }
+
         return Promise.reject(error);
     }
 );
 
 export async function awaitDeveloperTimeout() {
-    return await new Promise(resolve => setTimeout(resolve, 500));
+    return await new Promise(resolve => setTimeout(resolve, 0));
 }
 
 export const dropZoneConfiguration = {

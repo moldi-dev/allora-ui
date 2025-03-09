@@ -24,7 +24,7 @@ const ChatMessage: React.FC<{ message: ChatMessage; isUser: boolean }> = ({ mess
         <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-4`}>
             <div
                 className={`max-w-[70%] rounded-lg p-3 ${
-                    isUser ? 'bg-blue-500 text-white' : 'bg-white text-gray-700'
+                    isUser ? 'bg-black text-white' : 'bg-white text-gray-700'
                 }`}
             >
                 {content}
@@ -109,16 +109,16 @@ function AiAssistantComponent() {
                   <Textarea
                       {...register("prompt")}
                       placeholder="Type your prompt here..."
-                      className="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="flex-1 p-2 border border-gray-300 rounded-lg"
                       rows={3}
                   />
                     <LoadingButton
                         clipLoaderColor="white"
                         isLoading={promptAiMutation.isPending}
                         type="submit"
-                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="px-4 py-2 bg-black text-white rounded-lg"
                     >
-                        <Send className="w-4 h-4 mr-2"/> Send
+                        <Send className="w-4 h-4 mr-2"/>
                     </LoadingButton>
                 </div>
                 {errors.prompt && (
