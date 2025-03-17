@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useGetAuthenticatedUserDataQuery} from "@/apis/UserAPI.ts";
 import LoadingPage from "@/pages/loading-page.tsx";
 import ErrorPage from "@/pages/error-page.tsx";
-import {isHttpResponse} from "@/lib/utils.ts";
+import {isErrorResponse, isHttpResponse} from "@/lib/utils.ts";
 import {Navigate, useSearchParams} from "react-router-dom";
 import AdminNavigation from "@/components/admin-dashboard-page/admin-navigation.tsx";
 import {Bot, ClipboardList, ShoppingBag, Star, Users} from "lucide-react";
@@ -50,6 +50,12 @@ function AdminDashboardPage() {
     else if (isHttpResponse(getAuthenticatedUserData.data) && !getAuthenticatedUserData.data.body.isAdministrator) {
         return (
             <Navigate to="/home"/>
+        );
+    }
+
+    else if (isErrorResponse(getAuthenticatedUserData.data)) {
+        return (
+            <Navigate to="/sign-in"/>
         );
     }
 

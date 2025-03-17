@@ -108,6 +108,9 @@ function UsersComponent() {
                                             <CardTitle>{user.username}</CardTitle>
                                             <p className="text-sm text-muted-foreground">{user.email}</p>
                                         </div>
+                                        <Badge variant="outline">
+                                            Last login: {new Date(user.lastLogin).toLocaleString()}
+                                        </Badge>
                                     </div>
                                 </CardHeader>
                                 <CardContent className="flex-grow">

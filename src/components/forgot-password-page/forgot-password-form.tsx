@@ -186,7 +186,7 @@ function ForgotPasswordForm() {
                                     clipLoaderColor="white"
                                     className="w-full block"
                                 >
-                                    Sign In
+                                    Send reset password code
                                 </LoadingButton>
                             </div>
 

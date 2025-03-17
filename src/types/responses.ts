@@ -94,6 +94,7 @@ export type UserResponse = {
     email: string;
     isAdministrator: boolean;
     userPersonalInformation: UserPersonalInformationResponse;
+    lastLogin: string;
 }
 
 type Pageable = {
